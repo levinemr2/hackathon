@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ChatService} from './chat.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,23 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'hackathon';
+
+ newMessage = '';
+  messageList: string[] = [];
+ 
+
+  constructor(private chatService: ChatService){}
+
+  ngOnInit(){
+    this.chatService.getNewMessage().subscribe((message: string) => {
+      this.messageList.push(message);
+    })
+  }
+
+  sendMessage(){
+    
+    this.chatService.sendMessage(this.newMessage);
+    this.newMessage = '';
+    console.log('onclick works')
+  }
 }
